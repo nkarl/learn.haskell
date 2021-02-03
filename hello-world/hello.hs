@@ -1,14 +1,15 @@
--- First Haskell source script
--- comment style is similar to Lua with the double hyphens
---
--- if a Haskell source script is to be compiled and executed, it needs a "main" function
--- to execute from. This is similar to the "main" file (which contains the main() function) in C++.
---
--- However, Haskell source script can also be loaded into the ghci and the functions in the source 
--- script can be be called directly.
---
+mul :: Integer -> Integer -> Integer
+mul x y = x * y
 
-doubleThis :: Int -> Int
-doubleThis x = x + x
+factorial n =
+  if n > 1
+    then n * factorial (n - 1)
+    else 1
 
-main = print "Hello World!"
+main = do
+  putStrLn "Hello, world!"
+  putStrLn "What is 4 * 6?"
+  x <- readLn
+  if x == (mul 4 6)
+    then putStrLn "You are right!"
+    else putStrLn "You are wrong!"
