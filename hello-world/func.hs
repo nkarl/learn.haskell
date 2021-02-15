@@ -11,7 +11,8 @@
 doubleThis :: Int -> Int
 doubleThis x = x + x
 
-multiplyTwo :: Int -> Int -> Int
+multiplyTwo :: Int -> (Int -> Int)
 multiplyTwo x y = x * y
 
-
+--divi :: Int -> (Int -> Int)
+--divi x y = x / y
