@@ -24,6 +24,13 @@ cpList :: [a] -> [a]
 cpList [] = []
 cpList (x : xs) = x : (cpList xs)
 
+cpList' :: [a] -> [a]
+cpList' iL = helper iL []
+  where
+    helper :: [a] -> [a] -> [a]
+    helper [] buf = reverse buf
+    helper (x : xs) buf = helper xs (x : buf)
+
 -- tailcpList, optimized to prevent dependence on stackframe
 -- takes a list and transform it into an empty list while also populate another list with head element
 -- pulled from the original list.
@@ -36,9 +43,16 @@ cpList (x : xs) = x : (cpList xs)
 --          reach the base case, return the new list after cons b[a]
 --
 --  II. The inductive case: this is true for N elements
-tcpL :: [a] -> ([a] -> [a])
-tcpL [] cache = cache
-tcpL (x : xs) cache = tcpL xs (x : cache)
+--tcpL :: [a] -> ([a] -> [a])
+--tcpL [] cache = cache
+--tcpL (x : xs) cache = tcpL xs (x : cache)
+
+tailcpList :: [a] -> [a]
+tailcpList iL = helper iL []
+  where
+    helper :: [a] -> [a] -> [a]
+    helper [] buffer = buffer
+    helper (x : xs) buffer = helper xs (x : buffer)
 
 -- NOTE on the bahaviors of the cons operator:
 -- On the left side: it separates the head from a list
