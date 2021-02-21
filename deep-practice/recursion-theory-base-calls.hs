@@ -78,4 +78,7 @@ cpString :: [char] -> [char]
 cpString [] = []
 cpString (x:xs) = x:(cpString xs)
 
--- In total, the function requires at least at steps from start to finish. Can we do better?
+-- In total, the function, from start to finish, requires eight steps and four stackframes. That is a space
+-- complexity of O(N) and time complexity of O(2N).
+--
+-- Can we do better?

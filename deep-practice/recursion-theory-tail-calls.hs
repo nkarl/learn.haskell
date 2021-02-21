@@ -97,3 +97,6 @@ cpString (x:xs) bucket  = cpString xs (x:bucket)
 -- This is not surprising. We have an extra list (Bucket) as paramter, one more than the previous
 -- implementation (the base with out tail optimization). Since the base has two lists, and the optimization
 -- has one more, it makes sense that the optimization has in total three lists.
+--
+-- Thus, we have reduced the space complexity from O(N) to O(1). The time comlexity is still O(2N) because we
+-- still need to reverse the Bucket to obtain the original list.
