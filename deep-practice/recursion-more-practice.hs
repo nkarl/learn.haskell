@@ -1,0 +1,25 @@
+-- PRACTICE ON MORE DIVERSIFIED IMPLEMENTATION OF RECURSIVE FUNCTIONS
+--
+-- In this session, I will apply what have been fleshed out in the basic implementation for the base and tail 
+-- optimization in a wider array of functions. These functions will perform more diverse tasks while serving
+-- as a good examples for how we can use recursion in Haskell.
+--
+-- 1. inSert:
+--    Write a function inSert that:
+--      - takes an integer 'n', a value 'item' and a list 'iL', and then
+--      - inserts the 'item' at index 'n' in the list 'iL'.
+--
+--    Other considerations:
+--      - 'n' is a 1-based index, i.e. 'item' should be inserted after n'th element in the list.
+--      - The type signature of inSert can be:
+--
+--          insert :: (Num t1) => t1 -> t2 -> [t2] -> [t2]
+--      
+--        or,
+--
+--          insert :: (Eq t1, Num t1) => t1 -> t2 -> [t2] -> [t2]
+--
+--        or,
+--
+--          insert :: (Ord t1, Num t1) => t1 - t2 -> [t2] -> [t2]
+--
