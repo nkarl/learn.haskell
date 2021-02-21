@@ -1,0 +1,81 @@
+-- MORE PRACTICE ON RECURSION, THE BASIC CASE
+--
+-- In this session, I will review the basic of Haskell's recursive calls.
+--------------------------------------------------------------------------------------------------------------
+-- Recursive functions are the essence of Haskell the functional programming language.
+--
+-- Haskell heavily utilizes the stackframes. Because of the immunitable nature of data in Haskell, the 
+-- language is designed to creates copies of the original data in a very efficient manner. Every time we need
+-- to do something a particular piece of data (for example, a string), the entire piece is copied, element 
+-- by element into a new instance and the original piece of data is retained.
+--
+-- Let's create a simple function to copy a string.
+--
+--------------------------------------------------------------------------------------------------------------
+-- A word is simply a sequence of letters.
+--
+-- Thus, a string is simply a list of characters in Haskell:
+--
+--          cpString :: [char] -> [char]
+--
+-- means 'this function takes in a list of chars as argument and produces a new list of chars.
+--
+--------------------------------------------------------------------------------------------------------------
+-- I find it useful to break down the operation into two separate directions:
+--
+--   * What do we do on a regular basis? (this is the inductive case in math, or recursive case in programming)
+--
+--   * What do we do in the edge case? (this is base case in both induction proof and recursion programming)
+--
+--
+-- On a regular basis, we expect that there are still letters in the original word. In this case, the sequence
+-- of letters is treated as a list and seperated by the head. In other words, the first element of the list
+-- will need to be separated and append, or push into the new sequence.
+--
+-- Thus, for the regular case:
+--
+--          cpString (x:xs) = x:(cpString xs)
+--
+-- This means that: when a list is passed as argument into the function cpString (on the left hand side), it
+-- will produce the result on the right hand side, which in turn can be broken down into these steps:
+--
+--      1. The original string is copied into the argument slot of the function cpString.
+--      2. The compiler syntax (x:xs) tells the compiler to produce a copy of the head and a copy of the rest
+--          of the original string
+--      3. The head is set is aside waiting to be appended, while the 'rest' is copied again into a new
+--          stackframe in which the function cpString is called again and 'xs' is the copied in as its 
+--          argument.
+--      4. This process is repeated until the compiler exhausts the list, or reaches a  copy of an empty list.
+--      5. In this base case, the function returns an empty list.
+--      6. And then stackframe by stackframe, it will append the element (set aside) from the previous
+--          stackframe into the new list (originally empty).
+--
+-- Thus, the base case is simply:
+--          
+--          cpString [] = []
+--
+--------------------------------------------------------------------------------------------------------------
+-- For example, "abcd":
+--
+--  cpString 'a':'bcd' = 'a':(cpString 'bcd')
+--                           cpString 'b':'cd' = 'b':(cpString 'cd')
+--                                                   cpString 'c':'d' = 'c':(cpString 'd')
+--                                                                          cpString 'd':[] = 'd':(cpString [])
+--                                                                                               |
+--                                                                                               |
+--                                                                                               |
+--                                                                                               v
+--                                                                                            'd':[]
+--                                                                      'c':[d]
+--                                               'b':[cd]
+--                       'a':[bcd]
+--  "abcd"
+--
+--------------------------------------------------------------------------------------------------------------
+-- Now we put everything together:
+--
+cpString :: [char] -> [char]
+cpString [] = []
+cpString (x:xs) = x:(cpString xs)
+
+-- In total, the function requires at least at steps from start to finish. Can we do better?

@@ -69,9 +69,10 @@ tailcpList iL = helper iL []
 --
 --  II. The inductive case: this is  true for N elements
 --n'thElem [] n = error "list is too short."
+elemNth :: (Eq t, Num t) => [p] -> t -> p
 elemNth [] n = error "list too short."
 elemNth (x : xs) 0 = x
-elemNth (x : xs) n = (elemNth xs (n -1))
+elemNth (x : xs) n = elemNth xs (n -1)
 
 -- n'thElem 0 (x:xs) = x
 -- n'thElem n (x:xs) = (n'thElem (n-1) xs)

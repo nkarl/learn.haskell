@@ -25,6 +25,7 @@ insertBefore v pos (x : xs)
 
 -- insert an element into the list, AT pos
 -- example: insert 10 AT pos 3 in the list a = [0,1,2,10,3,4,5,6,7,8]
+insert :: (Eq t1, Num t1) => t2 -> t1 -> [t2] -> [t2]
 insert v 0 [] = v : [] -- if list is empty, just add
 insert v pos [] = error "Index is out of range of list." -- edge case
 insert v pos (x : xs)
