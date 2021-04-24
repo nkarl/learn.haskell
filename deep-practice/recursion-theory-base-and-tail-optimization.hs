@@ -1,4 +1,6 @@
 -- yet another coding practice on the basics of Haskell
+{-# LANGUAGE FlexibleContexts #-}
+{-# LANGUAGE RankNTypes #-}
 
 aa = [1, 2, 3]
 
@@ -7,8 +9,7 @@ bb = [4, 5, 6]
 -- cpList, the simplest (unoptimized)
 -- takes a list and transforms/morphs it into new list (returns the new list)
 --      I.  base case
---      II. inductive case
--------------------------------------------------------------------------------------------------------
+--      II. inductive case -------------------------------------------------------------------------------------------------------
 --  I.  The base case: what will the function do?
 --      step 1:
 --          input = [a,b] -> separated into a:[b],
@@ -21,8 +22,7 @@ bb = [4, 5, 6]
 --
 --  II. The inductive case: this is true for N elements
 cpList :: [a] -> [a]
-cpList [] = []
-cpList (x : xs) = x : (cpList xs)
+cpList xs = map (\x -> x) xs
 
 cpList' :: [a] -> [a]
 cpList' iL = helper iL []
@@ -72,7 +72,10 @@ tailcpList iL = helper iL []
 elemNth :: (Eq t, Num t) => [p] -> t -> p
 elemNth [] n = error "list too short."
 elemNth (x : xs) 0 = x
-elemNth (x : xs) n = elemNth xs (n -1)
+elemNth (x : xs) n = elemNth xs (n - 1)
 
 -- n'thElem 0 (x:xs) = x
 -- n'thElem n (x:xs) = (n'thElem (n-1) xs)
+
+addOne x 0 = x
+addOne x n = x + 1 n -1
