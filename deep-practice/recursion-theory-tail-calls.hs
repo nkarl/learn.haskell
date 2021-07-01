@@ -1,0 +1,102 @@
+-- MORE PRACTICE ON RECURSION, OPTIMIZED FOR TAIL CALLS
+-- In this session, I will review the tail optimization for Haskell's recursive calls.
+--
+--------------------------------------------------------------------------------------------------------------
+-- In the last example, we see that it takes at least 8 steps to perform a complete copy operation on a string 
+-- of length 4 (i.e. a sequence of 4 letters).
+--
+-- Can we do better than that?
+--
+-- First, we must ask ourselves, what is the problem here?
+--
+-- The problem is that we are trying to reduce the number of steps we need to go through to complete this copy
+-- operation, from 8 steps to a number smaller than 8. How do we go about to do that?
+--
+-- Well, if we look at the diagram from the previous example, we see that we need at least 4 stackframes in
+-- total to reach the base case. Why?
+--
+-- Let's assume each instance of
+--          
+--          cpString (x:xs) = x:(cpString xs)
+--
+-- is a stackframe. Thus, if we count every line from start to the [], we have in total 4 stackframes.
+-- However, we have not yet answered the question why it is 4 stackframes. Well, if we direct our attention to
+-- just one stackframe, any of the four, and look at the structure (or syntax) of it. Let's analyze it.
+--
+-- On the left is the function's directive; it is the starting point of the action. On the right is the 
+-- function's consequence; it is the end point of the action. If we zoom in and look at the right hand side, 
+-- we see that each recursive call is encapsulated in a local scope, with the head element waiting to be
+-- attached outside (of that scope). Each time we make a recursive call, a new scope is needed while we still
+-- must keep track of the previous outer scope simply because we can lose the immediate head element from the
+-- previous scope. Otherwise, we wouldn't be able to arrive at a complete copy of the string; otherwise, we
+-- would have an empty string each time we drop the head element!
+--
+--------------------------------------------------------------------------------------------------------------
+-- That much is obious. However, if we look at that keyword 'drop', and ask ourselves, 'is there anyway for me
+-- to make that action useful here?'
+--
+-- Let's assume that we can drop the head element in a bucket somwhere and forget about it. What happens 
+-- then?
+--
+-- Well, immediately the 4 stackframes become useless. Why? Because we don't need to keep track of the
+-- previous scopes anymore! We can simply reuse the current stackframe for future calls. This reduces the
+-- total of stackframes needed from four to one! This implies that we have just reduced the space complexity
+-- of our operation by a factor of four!
+--
+-- Now, let's go back to the bucket we put aside (and forgot about) earlier. What if we make it a part of the
+-- function signature? What if we attach an empty bucket to that function in the beginning, and simply pick
+-- it up at the end of the operation?
+--
+-- Let's start with the regular case:
+--
+--          cpString (x:xs) bucket = cpString xs (x:bucket)
+--
+-- Voila! By immediately putting the head element into the bucket, we start anew each time! We simply need 
+-- to pass the rest' into the next function call, without having to worry about the previous scopes, because
+-- now there are no previous scopes anymore! Everything is new and fresh copies of the previous broken pieces,
+-- starting from the original footprint. (I know that might sound cruel to some people, but hey that is how 
+-- we move forward from the past!)
+--
+-- Now, we just keep copying the 'rest' each time and pass it as a new copy into the next function call.
+-- Eventually we reach the base case, at which point, we promptly turn over the now-full bucket containing
+-- letters identical to the original letters:
+--
+--          cpString [] bucket = bucket
+--
+--------------------------------------------------------------------------------------------------------------
+-- Thus, "abcd":
+-- cpString 'a':'bcd' BUCKET    = cpString 'b':'cd' a:BUCKET
+--                              = cpString 'c':'d'  b:BUCKET
+--                              = cpString 'd':[]   c:BUCKET
+--                              = cpString  []      BUCKET      --> BUCKET = [d,c,b,a]
+--
+-- Notice that our Bucket contains the same letters but reverse order. This is not surprising. Recall that we
+-- separate the original list by the head and immediately attach it to the the BUCKET. If we go through the
+-- diagram above step by step, we will see that, assuming the Bucket is empty in the beginning,
+--
+--          a:[]
+--          b:[a]
+--          c:[b,a]
+--          d:[c,b,a]
+--          [d,c,b,a]
+--
+-- Thus, in order to get a carbon copy of the original sequence, we must do a final modification to the base
+-- case:
+--
+--          cpString [] bucket = reverse bucket
+--
+--
+-- We have achieved the same result as the previous basic implementation with better optimization for space
+-- complexity.
+cpString :: [char] -> [char] -> [char]
+cpString [] bucket      = reverse bucket
+cpString (x:xs) bucket  = cpString xs (x:bucket)
+
+-- Notice that type signature has changed from 2 lists of chars to 3 lists of chars now.
+--
+-- This is not surprising. We have an extra list (Bucket) as paramter, one more than the previous
+-- implementation (the base with out tail optimization). Since the base has two lists, and the optimization
+-- has one more, it makes sense that the optimization has in total three lists.
+--
+-- Thus, we have reduced the space complexity from O(N) to O(1). The time comlexity is still O(2N) because we
+-- still need to reverse the Bucket to obtain the original list.
