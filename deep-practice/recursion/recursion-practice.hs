@@ -12,9 +12,9 @@
 --   - takes an integer 'n', a value 'item' and a list 'iL', and then
 --   - inserts the 'item' at index 'n' in the list 'iL'.
 --
-aa   = [1, 2, 3, 4, 5, 6]
+aa = [1, 2, 3, 4, 5, 6]
 
-n    = 3
+n = 3
 
 item = 999
 
@@ -122,9 +122,7 @@ item = 999
 --                               insert n item iL = helper n item iL []
 
 insert n item iL =
-    let
-      helper 0 item []     bucket = bucket
-      helper 0 item (x:xs) bucket = helper 0 item xs (x:item:bucket)
-      helper n item (x:xs) bucket = helper (n-1) item xs (x:bucket)
-     in
-      helper n item iL []
+  let helper 0 item [] bucket = bucket
+      helper 0 item (x : xs) bucket = helper 0 item xs (x : item : bucket)
+      helper n item (x : xs) bucket = helper (n -1) item xs (x : bucket)
+   in helper n item iL []
