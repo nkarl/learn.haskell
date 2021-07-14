@@ -1,0 +1,3 @@
+[submodule ".\\fp-course\\"]
+	path = .\\fp-course\\
+	url = https://github.com/system-f/fp-course
