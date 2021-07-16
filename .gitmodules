@@ -5,5 +5,23 @@
 	path = .\\projects\\popularCodeExamples\\
 	url = https://github.com/nkarl/learn.haskell.popularCodeExamples
 [submodule "learn\\testProject"]
-	path = learn\\testProject
+    path = learn\\testProject
+    url = https://github.com/nkarl/learn.haskell.testProject
+[submodule "./learn/functional-programming/"]
+	path = ./learn/functional-programming/
+	url = https://github.com/system-f/fp-course
+[submodule "./projects/popularCodeExamples/"]
+	path = ./projects/popularCodeExamples/
+	url = https://github.com/nkarl/learn.haskell.popularCodeExamples
+[submodule "learn/testProject"]
+    path = learn/testProject
+    url = https://github.com/nkarl/learn.haskell.testProject
+[submodule "learn/functional-programming"]
+	path = learn/functional-programming
+	url = https://github.com/system-f/fp-course
+[submodule "projects/popularCodeExamples"]
+	path = projects/popularCodeExamples
+	url = https://github.com/nkarl/learn.haskell.popularCodeExamples
+[submodule "projects/testProject"]
+	path = projects/testProject
 	url = https://github.com/nkarl/learn.haskell.testProject
