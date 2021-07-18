@@ -19,3 +19,6 @@
 [submodule "projects/testProject"]
 	path = projects/testProject
 	url = https://github.com/nkarl/learn.haskell.testProject
+[submodule "learn/functional-programming"]
+	path = learn/functional-programming
+	url = https://github.com/nkarl/fp-course
