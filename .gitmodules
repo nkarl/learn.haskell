@@ -1,0 +1,3 @@
+[submodule "projects/haskell-json"]
+	path = projects/haskell-json
+	url = https://github.com/nkarl/haskell.json-parser.git
